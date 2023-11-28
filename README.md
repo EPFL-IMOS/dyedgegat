@@ -1,2 +1,2 @@
-# dygatad
-DyGATAD: Dynamic Graph Attention for Anomaly Detection in Heterogeneous Sensor Networks
+# DyEdgeGAT
+DyEdgeGAT: Dynamic Edge via Graph Attention for Early Fault Detection in IIoT Systems
