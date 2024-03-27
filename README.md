@@ -1,6 +1,6 @@
 # DyEdgeGAT: Dynamic Edge via Graph Attention for Early Fault Detection in IIoT Systems
 
-Our paper has been officially accepted for publication in the IEEE Internet of Things Journal, and is now available online. You can access it via the following DOI link: [DOI: 10.1109/JIOT.2024.3381002]([https://pages.github.com/](https://doi.org/10.1109/JIOT.2024.3381002 )).
+Our paper has been officially accepted for publication in the **IEEE Internet of Things Journal**, and is now available online. You can access it via the following DOI link: [DOI: 10.1109/JIOT.2024.3381002](https://doi.org/10.1109/JIOT.2024.3381002).
 
 ## Data
 1. The synthetic dataset is included in the `run/datasets/toy` folder.
