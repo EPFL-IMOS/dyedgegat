@@ -1,0 +1,67 @@
+device: auto
+out_dir: results
+case: pronto
+seed: 78
+num_workers: 0
+print: both
+
+### debug settings
+neptune_agg: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/pronto
+  has_adj: false
+  normalize: true
+  scaler_type: standard
+  window_size: 1
+  aug_ocvar_on_node: false
+  aug_ocvar: true
+  use_indep_vars: true
+  train_file: normal.csv
+  test_file: faults.csv
+  test_split: 0.4
+  val_split: 0.16667
+
+task:
+  type: anomaly
+  anomaly_score_func: node_scaled
+  level: graph
+  train_type: reconst
+  anomaly_score_sw: 1
+  detection_delay_ts: 5
+  anomaly_score_thresh: 0.95
+  anomaly_score_thresh_mode: val
+  
+### default model paramters
+model:
+  output_dim: 0
+  dropout: 0.
+  activation: relu
+  norm_func: batch
+  type: ae
+  ae:
+    hidden_dims: [20, 20, 20, 10, 10, 4]
+  dropout: 0.
+  activation: relu
+
+### training paramters
+train:
+  ckpt_period: 10
+  draw_period: 20
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 256
+  early_stop_patience: 10
+  early_stop_min: 100
+  
+### optimizer paramters
+optim:
+  base_lr: 1e-3
+  max_epochs: 300
+  scheduler: plateau
+  factor: 0.9
+  patience: 10
+  criterion: mse

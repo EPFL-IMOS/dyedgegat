@@ -1,0 +1,72 @@
+device: auto
+out_dir: results
+case: toy/syn3
+seed: 78
+num_workers: 0
+print: both
+
+### debug settings
+neptune_agg: true
+neptune_each_run: true
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/toy
+  has_adj: false
+  normalize: false
+  window_size: 15
+  aug_ocvar_on_node: false
+  train_file: train.csv
+  test_file: test.csv
+
+task:
+  type: anomaly
+  metric: last
+  anomaly_score_func: node_scaled_combined
+  train_type: combined
+  anomaly_score_thresh: 0.95
+  anomaly_score_sw: 1
+  detection_delay_ts: 10
+  anomaly_score_thresh_mode: val
+
+### default model paramters
+model:
+  type: mtadgat
+  mtadgat:
+    encoder:
+      encode: true
+      kernel_size: 3
+      padding: 0
+    use_gatv2: true
+    num_feat_layers: 1
+    num_temp_layers: 1
+    feat_gat_embed_dim: 20
+    time_gat_embed_dim: 20
+    gru_n_layers: 1
+    gru_hid_dim: 20
+    recon_hid_dim: 20
+    recon_n_layers: 1
+    fc_n_layers: 2
+    fc_hid_dim: 20
+  dropout: 0.
+  activation: relu
+  norm_func: batch
+
+### training paramters
+train:
+  ckpt_period: 50
+  draw_period: 50
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 64
+  early_stop_patience: 20
+  early_stop_min: 150
+
+### optimizer paramters
+optim:
+  base_lr: 1e-3
+  max_epochs: 300
+  scheduler: none
+  criterion: mae

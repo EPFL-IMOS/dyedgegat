@@ -1,0 +1,87 @@
+device: auto
+out_dir: results
+case: pronto
+seed: 78
+num_workers: 0
+print: both
+
+### debug settings
+neptune_agg: true
+neptune_each_run: false
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/pronto
+  scaler_type: standard
+  use_indep_vars: true
+  has_adj: false
+  normalize: true
+  window_size: 15
+  aug_ocvar_on_node: true
+  train_file: normal.csv
+  test_file: faults.csv
+  test_split: 0.4
+  val_split: 0.16667
+
+task:
+  type: anomaly
+  anomaly_score_func: att_scaled
+  train_type: reconst
+  anomaly_score_sw: 1
+  detection_delay_ts: 30
+  anomaly_score_thresh_mode: val
+  anomaly_score_thresh: 0.95
+  metric: all
+
+### default model paramters
+model:
+  type: dyedgegat
+  dropout: 0.
+  activation: relu
+  dyedgegat:
+    feat_input_node: 1
+    feat_input_edge: 1
+    temp_node_embed_dim: 20
+    temp_edge_embed_dim: 1
+    temp_edge_hid_dim: 100
+    gnn_type: gin
+    gnn_embed_dim: 40
+    num_gnn_layers: 2
+    infer_graph: false
+    node_encoder_mode: simple
+    do_encoder_norm: true
+    do_gnn_norm: true
+    do_decoder_norm: false
+    encoder_norm_type: layer
+    gnn_norm_type: batch
+    decoder_norm_type: graph
+    infer_temporal_edge: true
+    use_time_encoding: true
+    time_dim: 10
+    aug_feat_edge_attr: false
+    temporal_window: 5
+    edge_aggr: dot
+    flip_output: true
+    learn_sys: false
+
+### training paramters
+train:
+  ckpt_period: 20
+  draw_period: 20
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: false
+  batch_size: 256
+  early_stop_patience: 20
+  early_stop_min: 150
+
+
+### optimizer paramters
+optim:
+  base_lr: 1e-3
+  max_epochs: 300
+  scheduler: plateau
+  factor: 0.9
+  patience: 10
+  criterion: mse

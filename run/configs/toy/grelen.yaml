@@ -1,0 +1,67 @@
+device: auto
+out_dir: results
+case: toy
+seed: 78
+num_workers: 0
+print: both
+
+### debug settings
+neptune_agg: true
+neptune_each_run: false
+tensorboard_each_run: true
+
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/toy
+  scaler_type: minmax
+  has_adj: false
+  normalize: true
+  window_size: 15
+  aug_ocvar_on_node: false
+  train_file: train.csv
+  test_file: test.csv
+
+task:
+  type: anomaly
+  anomaly_score_func: grelen_ad
+  anomaly_score_metric: mae
+  anomaly_score_sw: 1
+  level: graph
+  train_type: reconst
+  anomaly_score_thresh_mode: val
+  detection_delay_ts: 10
+  track_graph: true
+  metric: all
+
+### default model paramters
+model:
+  type: grelen
+  grelen:
+    prior: [0.99, 0.01]
+    graph_learner_n_hid: 10
+    graph_learner_n_head_dim: 10
+    graph_learner_head: 2
+    num_rnn_layers: 1
+    gru_n_dim: 10
+    temperature: 0.5
+    max_diffusion_step: 2
+
+### training paramters
+train:
+  ckpt_period: 10
+  draw_period: 10
+  auto_resume: true
+  epoch_resume: -1
+  ckpt_clean: true
+  batch_size: 64
+  early_stop_patience: 20
+  early_stop_min: 150
+  
+### optimizer paramters
+optim:
+  base_lr: 1e-3
+  max_epochs: 300
+  scheduler: none
+  criterion: mae

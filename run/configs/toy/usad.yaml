@@ -1,0 +1,61 @@
+device: auto
+out_dir: results
+case: toy
+seed: 78
+num_workers: 0
+print: both
+
+### debug settings
+neptune_agg: true
+neptune_each_run: false
+draw_learned_graph: false
+
+### dataset settings
+dataset:
+  dir: datasets/toy
+  has_adj: false
+  normalize: true
+  window_size: 15
+  aug_ocvar_on_node: false
+  train_file: train.csv
+  test_file: test.csv
+
+task:
+  type: anomaly
+  anomaly_score_func: usad
+  level: graph
+  anomaly_score_sw: 1
+  detection_delay_ts: 10
+  anomaly_score_thresh_mode: val
+  anomaly_score_thresh: 0.95
+  train_type: usad
+  
+### default model paramters
+model:
+  dropout: 0.
+  activation: relu
+  norm_func: none
+  type: usad
+  usad:
+    final_act: sigmoid
+    warmup_epochs: 50 
+    alpha: 0.9
+    latent_dim: 10
+
+### training paramters
+train:
+  ckpt_period: 20
+  draw_period: 20
+  auto_resume: true
+  epoch_resume: 50
+  ckpt_clean: true
+  batch_size: 64
+  early_stop_patience: 20
+  early_stop_min: 300
+  
+### optimizer paramters
+optim:
+  base_lr: 1e-3
+  max_epochs: 300
+  scheduler: none
+  criterion: mse
