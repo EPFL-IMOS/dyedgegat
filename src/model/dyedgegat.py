@@ -59,30 +59,29 @@ GNN_CONV_LAYER_DICT = {
 }
 
 
-class TimeEncode(torch.nn.Module):
-
-  def __init__(self, dimension):
-    """Time encoder module for TGAT model reimplemented by TGN authors.
-        https://github.com/twitter-research/tgn/blob/master/model/time_encoding.py
+class TimeEncode(nn.Module):
     """
-    super(TimeEncode, self).__init__()
+    https://github.com/twitter-research/tgn/blob/master/model/time_encoding.py
+    out = linear(time_scatter): 1-->time_dims
+    out = cos(out)
+    """
+    def __init__(self, dim):
+        super(TimeEncode, self).__init__()
+        self.dim = dim
+        self.w = nn.Linear(1, dim)
+        self.reset_parameters()
 
-    self.dimension = dimension
-    self.w = torch.nn.Linear(1, dimension)
+    def reset_parameters(self):
+        self.w.weight = nn.Parameter((torch.from_numpy(1 / 10 ** np.linspace(0, 9, self.dim, dtype=np.float32))).reshape(self.dim, -1))
+        self.w.bias = nn.Parameter(torch.zeros(self.dim))
 
-    self.w.weight = torch.nn.Parameter((torch.from_numpy(1 / 10 ** np.linspace(0, 9, dimension)))
-                                       .float().reshape(dimension, -1))
-    self.w.bias = torch.nn.Parameter(torch.zeros(dimension).float())
+        self.w.weight.requires_grad = False
+        self.w.bias.requires_grad = False
 
-  def forward(self, t):
-    # t has shape [batch_size, seq_len]
-    # Add dimension at the end to apply linear layer --> [batch_size, seq_len, 1]
-    t = t.unsqueeze(dim=2)
-
-    # output has shape [batch_size, seq_len, dimension]
-    output = torch.cos(self.w(t))
-
-    return output
+    @torch.no_grad()
+    def forward(self, t):
+        output = torch.cos(self.w(t.reshape((-1, 1))))
+        return output
 
 
 class FeatureGraph(nn.Module):
