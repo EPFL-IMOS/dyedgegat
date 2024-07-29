@@ -54,6 +54,7 @@ class GRUEncoder(nn.Module):
     :param hid_dim: hidden size of the GRU
     :param n_layers: number of layers in GRU
     :param dropout: dropout rate
+    :Param mode: type of encoder, should be one of 'univariate' (list of GRUs for each input channel), 'multivariate' (single GRU with inputsize of in_channel) or 'simple' (A single GRU that is shared for all input channels). 
     """
 
     def __init__(
@@ -63,7 +64,7 @@ class GRUEncoder(nn.Module):
         activation='relu',
         norm_func='batch',
         bidirectional=False,
-        mode='univariate',
+        mode='simple',
         **kwargs
     ):
         super(GRUEncoder, self).__init__()
