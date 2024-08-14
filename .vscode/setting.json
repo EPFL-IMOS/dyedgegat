@@ -1,0 +1,38 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src"
+    ],
+    "terminal.integrated.env.windows": {
+      "PYTHONPATH": "${env:PYTHONPATH};${workspaceFolder}/src" 
+    },
+    "terminal.integrated.env.osx": {
+      "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.linux": {
+      "PYTHONPATH": "${env:PYTHONPATH}:${workspaceFolder}/src"
+    },
+    "python.analysis.autoSearchPaths": true,
+    "python.envFile": "${workspaceFolder}/.env" ,
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "launch": {
+      "configurations": [
+          {
+              "name": "Python: Module",
+              "type": "debugpy",
+              "request": "launch",
+              "module": "command:extension.commandvariable.file.relativeDirDots.{fileBasenameNoExtension}"
+          },
+            {
+                "name": "Python: Current File",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "justMyCode": false,
+                "cwd": "${fileDirname}",
+                "purpose": ["debug-in-terminal"]
+            }
+      ],
+      "compounds": []
+  }
+}
