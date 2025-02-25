@@ -44,7 +44,7 @@ Note pyTorch 1.12.* binaries do not support CUDA versio above (including) 11.7.
 
 
 ### Installing pytorch-geometric
-Follow [PyG 2.2.0 INSTALLATION Guide](https://pytorch-geometric.readthedocs.io/en/2.2.0/notes/installation.html) for detailed .
+Follow [PyG 2.2.0 INSTALLATION Guide](https://pytorch-geometric.readthedocs.io/en/2.2.0/notes/installation.html) for detailed instructions.
 
 
 ## Usage
@@ -54,8 +54,6 @@ To train the model, run the following command:
 python run/main.py --cfg run/configs/toy/dyedgegat.yaml --repeat 5
 ```
 
-For any questions or feedback, please open an issue in this repository or contact us directly via email.
-
 The `--cfg` argument specifies the path to the config file, and the `--repeat` argument specifies the number of times to repeat the experiment.
 
 For evaluation, run the following command:
@@ -63,3 +61,5 @@ For evaluation, run the following command:
 ```bash
 python run/evaluate.py --cfg run/configs/toy/dyedgegat.yaml 
 ```
+
+For any questions or feedback, please open an issue in this repository or contact us directly via email.
